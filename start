@@ -1,0 +1,7 @@
+#!/bin/bash
+RUN_DIR=$(dirname "$0")
+
+cd $RUN_DIR/backend
+npm run start &>/dev/null & disown
+cd $RUN_DIR/frontend
+npm run start &>/dev/null & disown

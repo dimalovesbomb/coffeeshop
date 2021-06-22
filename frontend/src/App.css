@@ -1,0 +1,99 @@
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.link {
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 28px;
+  padding: 15px;
+  color: antiquewhite;
+  border: 1px solid lemonchiffon;
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: rgba(198, 198, 136, 0.33);
+  cursor: pointer;
+}
+
+.link:hover {
+  z-index: 10;
+  width: 100%;
+  transition: all 0.3s;
+  background-color: rgba(198, 198, 136, 0.4);
+  border: 1px solid rgb(126, 125, 119);
+}
+
+.link:active {
+  transform: translateY(4px);
+}
+
+.link:disabled {
+  color: grey;
+  background-color: rgba(65, 65, 58, 0.1);
+  cursor: not-allowed;
+}
+
+.input {
+  width: 250px;
+  height: 40px;
+  background-color: rgba(198, 198, 136, 0.1);
+  border: 1px solid lemonchiffon;
+  border-radius: 5px;
+  color: antiquewhite;
+  font-size: 16px;
+  padding-left: 10px;
+  margin-top: 25px;
+}
+
+.input::placeholder {
+  z-index: 10;
+  font-size: 16px;
+  color: antiquewhite;
+}
+
+.tooltip {
+  color: rgb(236, 157, 138);
+  font-size: 18px;
+}
+
+.tooltip_small {
+  color: rgb(236, 157, 138);
+  font-size: 12px;
+}
+
+.modal-button {
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 10px;
+  margin-right: 10px;
+  color: #302c2c;
+  border: 1px solid lemonchiffon;
+  border-radius: 5px;
+  margin-top: 30px;
+  background-color: rgba(198, 198, 136, 0.33);
+  cursor: pointer;
+}
+
+.modal-button:hover {
+  z-index: 10;
+  transition: all 0.3s;
+  background-color: rgba(198, 198, 136, 0.4);
+  border: 1px solid rgb(126, 125, 119);
+}
