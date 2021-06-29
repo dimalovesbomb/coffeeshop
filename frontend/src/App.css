@@ -97,3 +97,26 @@ ul {
   background-color: rgba(198, 198, 136, 0.4);
   border: 1px solid rgb(126, 125, 119);
 }
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(198, 198, 136, 0.5);
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+.loader p {
+  color: #302c2c;
+  font-size: 40px;
+}
+
+.loader img {
+  width: 20%;
+}

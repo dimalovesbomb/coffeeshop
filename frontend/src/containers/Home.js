@@ -4,18 +4,29 @@ import '../App.css';
 
 export const Home = () => {
     return (
-          <nav>
+        <nav>
             <ul className="list">
-              <li>
-                <Link className="link" to="/newUser">Новый клиент</Link>
-              </li>
-              <li>
-                <Link className="link" to="/regCup">Зарегистрировать кружку (или пару)</Link>
-              </li>
-              <li>
-                <Link className="link" to="/changeUser">Изменить данные клиента</Link>
-              </li>
+                <li>
+                    <Link className="link" to="/newUser">
+                        Новый клиент
+                    </Link>
+                </li>
+                <li>
+                    <Link className="link" to="/regCup">
+                        Зарегистрировать кружку (или пару)
+                    </Link>
+                </li>
+                <li>
+                    <Link className="link" to="/changeUser">
+                        Изменить данные клиента
+                    </Link>
+                </li>
+                <li>
+                    <Link className="link" to="/removeCups">
+                        Снести свои ошибки прошлого
+                    </Link>
+                </li>
             </ul>
-          </nav>
+        </nav>
     );
-}
+};

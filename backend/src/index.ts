@@ -1,5 +1,5 @@
 import express from "express";
-import { changeUser, getUser, newCups, newUser, Response, restoreCups, User } from "./methods";
+import { changeUser, getUser, newCups, newUser, removeMistakes, Response, restoreCups, User } from "./methods";
 
 const app = express();
 const PORT = 8080;
@@ -35,14 +35,21 @@ app.put('/api/newCups', (req, res) => {
     const recievedUser = new User(req.body.phoneNumber, '', '', +req.body.cupsQuantity);
     const response: Response = newCups(recievedUser);
 
-    return res.status(response.statusCode).send(response)
+    return res.status(response.statusCode).send(response);
 });
 
 app.put('/api/restoreCups', (req, res) => {
   const phoneNumber = req.body.phoneNumber;
   const response: Response = restoreCups(phoneNumber);
 
-  return res.status(response.statusCode).send(response)
+  return res.status(response.statusCode).send(response);
+});
+
+app.put('/api/removeMistakes', (req, res) => {
+  const {phoneNumber, cupsQuantity} = req.body;
+  const response = removeMistakes(cupsQuantity, phoneNumber);
+
+  return res.status(response.statusCode).send(response);
 });
 
 app.post('/api/newUser', (req, res) => {

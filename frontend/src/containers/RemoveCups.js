@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import MaskedInput from 'react-text-mask';
 import { CustomModal } from './Modal';
 import { Loader } from './Loader';
-import { isPhoneNumberValid, phoneNumberMask, initModalData } from '../helpers';
-import { useHistory } from 'react-router-dom';
+import { phoneNumberMask, isPhoneNumberValid, initModalData } from '../helpers';
+import { useHistory } from 'react-router';
 
-const ENOUGH_TO_GET_FREE_CUP = 6;
-
-export const RegCup = () => {
+export const RemoveCups = () => {
     const [phoneNumber, setPhoneNumber] = useState('+7');
+    const [isUserFound, setIsUserFound] = useState(false);
     const [cupsQuantity, setCupsQuantity] = useState('');
-    const [canAddCups, setCanAddCups] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [modalData, setModalData] = useState(initModalData);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const history = useHistory();
 
@@ -45,35 +43,18 @@ export const RegCup = () => {
             setIsLoading(() => false);
 
             if (req.statusCode === 200) {
-                if (req.result.cupsQuantity >= ENOUGH_TO_GET_FREE_CUP) {
-                    setModalData(() => ({
-                        ...initModalData,
-                        isOpen: true,
-                        header: 'Внимание!',
-                        text: `У пользователя уже ${req.result.cupsQuantity} чашек. Он берет бесплатную?`,
-                        onConfirm: onFreeCupConfirm,
-                        onConfirmText: 'Берет',
-                        onCancel: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
-                        onCancelText: 'Не берет',
-                    }));
-                } else {
-                    setModalData(() => ({
-                        ...initModalData,
-                        isOpen: true,
-                        header: '',
-                        text: `У клиента ${req.result.cupsQuantity} купленных чашек.`,
-                        onConfirm: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
-                    }));
-                }
-                setCanAddCups(() => true);
+                setModalData(() => ({
+                    ...initModalData,
+                    isOpen: true,
+                    header: '',
+                    text: `У клиента ${req.result.cupsQuantity} купленных чашек КАК ЗАПИСАНО В БАЗЕ.`,
+                    onConfirm: () =>
+                        setModalData(() => ({
+                            ...initModalData,
+                            isOpen: false,
+                        })),
+                }));
+                setIsUserFound(() => true);
             } else {
                 setModalData(() => ({
                     ...initModalData,
@@ -88,9 +69,20 @@ export const RegCup = () => {
                 }));
             }
         } else {
-            setCanAddCups(() => false);
+            setIsUserFound(() => false);
         }
     };
+
+    const onPhoneNumberChange = e => {
+        const isNumberValid = isPhoneNumberValid(e.target.value);
+        setPhoneNumber(() => e.target.value);
+
+        if (isNumberValid) {
+            checkUserStatus(e.target.value);
+        }
+    };
+
+    const onPhoneNumberBlur = e => setPhoneNumber(() => e.target.value);
 
     const onCupsQuantityChange = e => {
         e.target.value === ''
@@ -113,28 +105,19 @@ export const RegCup = () => {
         }
     };
 
-    const onPhoneNumberChange = e => {
-        const isNumberValid = isPhoneNumberValid(e.target.value);
-        setPhoneNumber(() => e.target.value);
-
-        if (isNumberValid) {
-            setPhoneNumber(() => e.target.value);
-            checkUserStatus(e.target.value);
-        }
-    };
-
     const onSubmit = async () => {
         setIsLoading(() => true);
-        const req = await fetch('/api/newCups', {
-            method: 'PUT',
+        const req = await fetch('/api/removeMistakes', {
             headers: { 'Content-Type': 'application/json' },
+            method: 'PUT',
             body: JSON.stringify({
                 phoneNumber,
-                cupsQuantity,
+                cupsQuantity: +cupsQuantity,
             }),
         })
             .then(res => res.json())
-            .catch(err =>
+            .catch(err => {
+                setIsLoading(() => false);
                 setModalData(() => ({
                     ...initModalData,
                     isOpen: true,
@@ -145,8 +128,8 @@ export const RegCup = () => {
                             ...initModalData,
                             isOpen: false,
                         })),
-                }))
-            );
+                }));
+            });
         setIsLoading(() => false);
 
         if (req.statusCode === 200) {
@@ -154,9 +137,12 @@ export const RegCup = () => {
                 ...initModalData,
                 isOpen: true,
                 header: 'Успех!',
-                text: `У пользователя сейчас ${req.result.cupsQuantity} чашек`,
+                text: `Удалили лишнего, теперь у пользователя ${req.result.cupsQuantity} чашек`,
                 onConfirm: () => {
-                    setModalData(() => ({ ...initModalData, isOpen: false }));
+                    setModalData(() => ({
+                        ...initModalData,
+                        isOpen: false,
+                    }));
                     history.push('/');
                 },
             }));
@@ -164,48 +150,14 @@ export const RegCup = () => {
             setModalData(() => ({
                 ...initModalData,
                 isOpen: true,
-                header: 'Ошибка!',
-                text: 'Что-то пошло не так!',
+                header: 'Упс!',
+                text: `Что-то пошло не так`,
                 onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
+                    setModalData(() => ({
+                        ...initModalData,
+                        isOpen: false,
+                    })),
             }));
-        }
-    };
-
-    const onFreeCupConfirm = async () => {
-        setIsLoading(() => true);
-        const req = await fetch('/api/restoreCups', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phoneNumber }),
-        })
-            .then(res => res.json())
-            .catch(err =>
-                setModalData(() => ({
-                    ...initModalData,
-                    isOpen: true,
-                    header: 'Упс!',
-                    text: `Ничего страшного вроде, но стоит проверить. ${err}`,
-                    onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
-                }))
-            );
-        setIsLoading(() => false);
-
-        if (req.statusCode !== 200) {
-            setModalData(() => ({
-                ...initModalData,
-                isOpen: true,
-                header: 'Ошибка!',
-                text: 'Что-то пошло не так!',
-                onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
-            }));
-        } else {
-            setModalData(() => ({ ...initModalData, isOpen: false }));
         }
     };
 
@@ -213,17 +165,18 @@ export const RegCup = () => {
         <div className="column">
             <MaskedInput
                 className="input"
-                onBlur={onPhoneNumberChange}
+                onBlur={onPhoneNumberBlur}
                 mask={phoneNumberMask}
                 value={phoneNumber}
                 onChange={onPhoneNumberChange}
             />
             <p className="tooltip_small">Номер телефона</p>
-            {canAddCups && (
+
+            {isUserFound && (
                 <div className="column">
                     <input
                         className="input"
-                        placeholder="Сколько взял чашек сейчас?"
+                        placeholder="Сколько чашек скрутить?"
                         value={cupsQuantity}
                         onChange={onCupsQuantityChange}
                     />

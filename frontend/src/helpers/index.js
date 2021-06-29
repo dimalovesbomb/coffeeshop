@@ -9,3 +9,13 @@ export const isPhoneNumberValid = phoneNumber => {
 };
 
 export const phoneNumberMask = ['+', '7', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+
+export const initModalData = {
+    isOpen: false,
+    header: '',
+    text: '',
+    onConfirm: undefined,
+    onConfirmText: undefined,
+    onCancel: undefined,
+    onCancelText: undefined
+};
