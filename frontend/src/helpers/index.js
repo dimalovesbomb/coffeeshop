@@ -19,3 +19,5 @@ export const initModalData = {
     onCancel: undefined,
     onCancelText: undefined
 };
+
+export const ENOUGH_TO_GET_FREE_CUP = 6;
