@@ -219,7 +219,6 @@ export function restoreCups(phoneNumber: string) {
                 if (foundUser.phoneNumber === phoneNumber) {
                     leftCups = dbUser.cupsQuantity - ENOUGH_TO_GET_FREE_CUP;
                     dbUser.cupsQuantity -= ENOUGH_TO_GET_FREE_CUP;
-                    // return { name: dbUser.name, phoneNumber: dbUser.phoneNumber, cupsQuantity: dbUser.cupsQuantity - ENOUGH_TO_GET_FREE_CUP };
                 }
                 return dbUser;
             });
@@ -248,14 +247,16 @@ export function removeMistakes(cups: number, phoneNumber: string) {
         );
 
         if (foundUser) {
-            const editedUser: User = {...foundUser, cupsQuantity: foundUser.cupsQuantity - cups};
+            const editedUser: User = {
+                ...foundUser,
+                cupsQuantity: foundUser.cupsQuantity - cups,
+            };
             const updatedDB = allUsers.map(dbUser => {
                 if (dbUser.phoneNumber === phoneNumber) {
                     return editedUser;
                 }
                 return dbUser;
             });
-            console.log(updatedDB)
 
             fs.writeFileSync(
                 path.resolve(__dirname, './db.json'),
@@ -266,5 +267,32 @@ export function removeMistakes(cups: number, phoneNumber: string) {
         } else {
             return new Response(false, 404, undefined, 'user not found');
         }
-    } catch (error) {}
+    } catch (error) {
+        return new Response(false, 400, undefined, error);
+    }
+}
+
+export function deleteUser(phoneNumber: string) {
+    console.log(phoneNumber)
+    try {
+        const allUsers: User[] = JSON.parse(
+            fs.readFileSync(path.resolve(__dirname, './db.json'), 'utf-8')
+        );
+        const foundUser = allUsers.find(
+            dbUser => dbUser.phoneNumber === phoneNumber
+        );
+
+        if (foundUser) {
+            const updatedDB = allUsers.filter(dbUser => dbUser.phoneNumber !== phoneNumber);
+            
+            fs.writeFileSync(
+                path.resolve(__dirname, './db.json'),
+                JSON.stringify(updatedDB)
+            );
+
+            return new Response(true, 200, foundUser);
+        }
+    } catch (error) {
+        return new Response(false, 400, undefined, error);
+    }
 }

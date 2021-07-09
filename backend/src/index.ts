@@ -1,5 +1,5 @@
 import express from "express";
-import { changeUser, getUser, newCups, newUser, removeMistakes, Response, restoreCups, User } from "./methods";
+import { changeUser, deleteUser, getUser, newCups, newUser, removeMistakes, Response, restoreCups, User } from "./methods";
 
 const app = express();
 const PORT = 8080;
@@ -57,6 +57,13 @@ app.post('/api/newUser', (req, res) => {
     const response: Response = newUser(recievedUser);
 
     return res.status(response.statusCode).send(response);
+});
+
+app.delete('/api/deleteUser', (req, res) => {
+  const { phoneNumber } = req.body;
+  const response = deleteUser(phoneNumber);
+
+  return res.status(response.statusCode).send(response);
 });
 
 app.listen(PORT, () => {
