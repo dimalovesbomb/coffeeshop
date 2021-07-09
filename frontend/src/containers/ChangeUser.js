@@ -22,9 +22,7 @@ export const ChangeUser = () => {
         if (isNumberValid) {
             setIsLoading(() => true);
             const req = await fetch(
-                `/api/getUser?phoneNumber=${encodeURIComponent(
-                    e.target.value
-                )}`,
+                `/api/getUser?phoneNumber=${encodeURIComponent(e.target.value)}`,
                 {
                     headers: { 'Content-Type': 'application/json' },
                 }
