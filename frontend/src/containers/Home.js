@@ -23,7 +23,12 @@ export const Home = () => {
                 </li>
                 <li>
                     <Link className="link" to="/removeCups">
-                        Снести свои ошибки прошлого
+                        Снести ошибки прошлого
+                    </Link>
+                </li>
+                <li>
+                    <Link className="link" to="/deleteUser">
+                        Удалить пользователя
                     </Link>
                 </li>
             </ul>

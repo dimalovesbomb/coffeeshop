@@ -5,6 +5,7 @@ import { Home } from './containers/Home';
 import { NewUser } from './containers/NewUser';
 import { RegCup } from './containers/RegCup';
 import { RemoveCups } from './containers/RemoveCups';
+import { DeleteUser } from './containers/DeleteUser';
 
 const App = () => {
     return (
@@ -22,8 +23,11 @@ const App = () => {
                 <Route path="/changeUser">
                     <ChangeUser />
                 </Route>
-                <Route>
-                    <RemoveCups path="/removeCups" />
+                <Route path="/removeCups">
+                    <RemoveCups />
+                </Route>
+                <Route path="/deleteUser">
+                    <DeleteUser />
                 </Route>
             </Switch>
         </div>
