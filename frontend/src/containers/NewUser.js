@@ -52,10 +52,7 @@ export const NewUser = () => {
                         header: 'Упс!',
                         text: `Ничего страшного вроде, но стоит проверить. ${err}`,
                         onConfirm: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
+                            setModalData(() => ({ ...initModalData })),
                     }));
                 });
             setIsLoading(() => false);
@@ -70,10 +67,7 @@ export const NewUser = () => {
                     header: 'Успех!',
                     text: successMessage,
                     onConfirm: () => {
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        }));
+                        setModalData(() => ({ ...initModalData }));
                         history.push('/');
                     },
                 }));
@@ -84,10 +78,7 @@ export const NewUser = () => {
                     header: 'Упс!',
                     text: errorMessage,
                     onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                        setModalData(() => ({ ...initModalData })),
                 }));
             }
         } else {
@@ -97,7 +88,7 @@ export const NewUser = () => {
                 header: 'Упс!',
                 text: 'Надо заполнить количество чашек, купленных сейчас. Если клиент ничего не взял, поставь 0.',
                 onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
+                    setModalData(() => ({ ...initModalData })),
             }));
         }
     };

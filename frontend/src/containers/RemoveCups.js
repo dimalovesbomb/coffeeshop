@@ -33,11 +33,7 @@ export const RemoveCups = () => {
                         isOpen: true,
                         header: 'Упс!',
                         text: `Ничего страшного вроде, но стоит проверить. ${err}`,
-                        onConfirm: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
+                        onConfirm: () => setModalData(() => ({ ...initModalData })),
                     }));
                 });
             setIsLoading(() => false);
@@ -48,11 +44,7 @@ export const RemoveCups = () => {
                     isOpen: true,
                     header: '',
                     text: `У клиента ${req.result.cupsQuantity} купленных чашек КАК ЗАПИСАНО В БАЗЕ.`,
-                    onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                    onConfirm: () => setModalData(() => ({ ...initModalData })),
                 }));
                 setIsUserFound(() => true);
             } else {
@@ -61,11 +53,7 @@ export const RemoveCups = () => {
                     isOpen: true,
                     header: 'Внимание!',
                     text: 'Пользователь с таким номером не найден!',
-                    onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                    onConfirm: () => setModalData(() => ({ ...initModalData })),
                 }));
             }
         } else {
@@ -97,8 +85,7 @@ export const RemoveCups = () => {
                 isOpen: true,
                 header: 'Ошибка!',
                 text: 'Не, в это поле можно только цифры!',
-                onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
+                onConfirm: () => setModalData(() => ({ ...initModalData })),
             }));
             setCupsQuantity(() => '');
             setIsButtonDisabled(() => true);
@@ -123,11 +110,7 @@ export const RemoveCups = () => {
                     isOpen: true,
                     header: 'Упс!',
                     text: `Ничего страшного вроде, но стоит проверить. ${err}`,
-                    onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                    onConfirm: () => setModalData(() => ({ ...initModalData })),
                 }));
             });
         setIsLoading(() => false);
@@ -139,10 +122,7 @@ export const RemoveCups = () => {
                 header: 'Успех!',
                 text: `Удалили лишнего, теперь у пользователя ${req.result.cupsQuantity} чашек`,
                 onConfirm: () => {
-                    setModalData(() => ({
-                        ...initModalData,
-                        isOpen: false,
-                    }));
+                    setModalData(() => ({ ...initModalData }));
                     history.push('/');
                 },
             }));
@@ -152,11 +132,7 @@ export const RemoveCups = () => {
                 isOpen: true,
                 header: 'Упс!',
                 text: `Что-то пошло не так`,
-                onConfirm: () =>
-                    setModalData(() => ({
-                        ...initModalData,
-                        isOpen: false,
-                    })),
+                onConfirm: () => setModalData(() => ({ ...initModalData })),
             }));
         }
     };

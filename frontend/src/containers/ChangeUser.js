@@ -37,11 +37,7 @@ export const ChangeUser = () => {
                         isOpen: true,
                         header: 'Упс!',
                         text: `Ничего страшного вроде, но стоит проверить. ${err}`,
-                        onConfirm: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
+                        onConfirm: () => setModalData(() => ({ ...initModalData })),
                     }));
                 });
             setIsLoading(() => false);
@@ -56,11 +52,7 @@ export const ChangeUser = () => {
                     isOpen: true,
                     header: 'Внимание!',
                     text: 'Клиент с таким номером не найден!',
-                    onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                    onConfirm: () => setModalData(() => ({ ...initModalData })),
                 }));
             }
         }
@@ -93,11 +85,7 @@ export const ChangeUser = () => {
                     isOpen: true,
                     header: 'Упс!',
                     text: `Ничего страшного вроде, но стоит проверить. ${err}`,
-                    onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                    onConfirm: () => setModalData(() => ({ ...initModalData })),
                 }))
             );
         setIsLoading(() => false);
@@ -109,7 +97,7 @@ export const ChangeUser = () => {
                 header: 'Успех!',
                 text: `Номер клиента ${req.result.name} успешно изменен. У клиента ${req.result.cupsQuantity} чашек`,
                 onConfirm: () => {
-                    setModalData(() => ({ ...initModalData, isOpen: false }));
+                    setModalData(() => ({ ...initModalData }));
                     history.push('/');
                 },
             }));
@@ -119,8 +107,7 @@ export const ChangeUser = () => {
                 isOpen: true,
                 header: 'Внимание!',
                 text: 'Что-то пошло не так!',
-                onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
+                onConfirm: () => setModalData(() => ({ ...initModalData })),
             }));
         }
     };

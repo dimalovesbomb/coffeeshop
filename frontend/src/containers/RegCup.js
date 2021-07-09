@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import MaskedInput from 'react-text-mask';
 import { CustomModal } from './Modal';
 import { Loader } from './Loader';
-import { isPhoneNumberValid, phoneNumberMask, initModalData } from '../helpers';
+import { isPhoneNumberValid, phoneNumberMask, initModalData, ENOUGH_TO_GET_FREE_CUP } from '../helpers';
 import { useHistory } from 'react-router-dom';
-
-const ENOUGH_TO_GET_FREE_CUP = 6;
 
 export const RegCup = () => {
     const [phoneNumber, setPhoneNumber] = useState('+7');
@@ -36,10 +34,7 @@ export const RegCup = () => {
                         header: 'Упс!',
                         text: `Ничего страшного вроде, но стоит проверить. ${err}`,
                         onConfirm: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
+                            setModalData(() => ({ ...initModalData })),
                     }));
                 });
             setIsLoading(() => false);
@@ -54,10 +49,7 @@ export const RegCup = () => {
                         onConfirm: onFreeCupConfirm,
                         onConfirmText: 'Берет',
                         onCancel: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
+                            setModalData(() => ({ ...initModalData })),
                         onCancelText: 'Не берет',
                     }));
                 } else {
@@ -67,10 +59,7 @@ export const RegCup = () => {
                         header: '',
                         text: `У клиента ${req.result.cupsQuantity} купленных чашек.`,
                         onConfirm: () =>
-                            setModalData(() => ({
-                                ...initModalData,
-                                isOpen: false,
-                            })),
+                            setModalData(() => ({ ...initModalData })),
                     }));
                 }
                 setCanAddCups(() => true);
@@ -81,10 +70,7 @@ export const RegCup = () => {
                     header: 'Внимание!',
                     text: 'Пользователь с таким номером не найден!',
                     onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                        setModalData(() => ({ ...initModalData })),
                 }));
             }
         } else {
@@ -106,7 +92,7 @@ export const RegCup = () => {
                 header: 'Ошибка!',
                 text: 'Не, в это поле можно только цифры!',
                 onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
+                    setModalData(() => ({ ...initModalData })),
             }));
             setCupsQuantity(() => '');
             setIsButtonDisabled(() => true);
@@ -141,10 +127,7 @@ export const RegCup = () => {
                     header: 'Упс!',
                     text: `Ничего страшного вроде, но стоит проверить. ${err}`,
                     onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                        setModalData(() => ({ ...initModalData })),
                 }))
             );
         setIsLoading(() => false);
@@ -156,7 +139,7 @@ export const RegCup = () => {
                 header: 'Успех!',
                 text: `У пользователя сейчас ${req.result.cupsQuantity} чашек`,
                 onConfirm: () => {
-                    setModalData(() => ({ ...initModalData, isOpen: false }));
+                    setModalData(() => ({ ...initModalData }));
                     history.push('/');
                 },
             }));
@@ -167,7 +150,7 @@ export const RegCup = () => {
                 header: 'Ошибка!',
                 text: 'Что-то пошло не так!',
                 onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
+                    setModalData(() => ({ ...initModalData })),
             }));
         }
     };
@@ -187,10 +170,7 @@ export const RegCup = () => {
                     header: 'Упс!',
                     text: `Ничего страшного вроде, но стоит проверить. ${err}`,
                     onConfirm: () =>
-                        setModalData(() => ({
-                            ...initModalData,
-                            isOpen: false,
-                        })),
+                        setModalData(() => ({ ...initModalData })),
                 }))
             );
         setIsLoading(() => false);
@@ -202,10 +182,10 @@ export const RegCup = () => {
                 header: 'Ошибка!',
                 text: 'Что-то пошло не так!',
                 onConfirm: () =>
-                    setModalData(() => ({ ...initModalData, isOpen: false })),
+                    setModalData(() => ({ ...initModalData })),
             }));
         } else {
-            setModalData(() => ({ ...initModalData, isOpen: false }));
+            setModalData(() => ({ ...initModalData }));
         }
     };
 
