@@ -12,7 +12,10 @@ const customStyles = {
     },
 };
 
-Modal.setAppElement('#root');
+const rootEl = document.getElementById('root');
+
+// Modal.setAppElement('#root');
+Modal.setAppElement(rootEl);
 
 Modal.defaultStyles.overlay.backgroundColor = 'rgba(92, 52, 52, 0.5)';
 

@@ -185,7 +185,15 @@ export const RegCup = () => {
                     setModalData(() => ({ ...initModalData })),
             }));
         } else {
-            setModalData(() => ({ ...initModalData }));
+            setModalData(() => ({
+                ...initModalData,
+                isOpen: true,
+                header: 'Успех!',
+                text: `У пользователя осталось ${req.result.cupsQuantity} чашек!`,
+                onConfirm: () => {
+                    setModalData(() => ({ ...initModalData }));
+                }
+            }));
         }
     };
 
