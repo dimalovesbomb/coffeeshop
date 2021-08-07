@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MaskedInput from 'react-text-mask';
 import { CustomModal } from './Modal';
 import { Loader } from './Loader';
-import { isPhoneNumberValid, phoneNumberMask, initModalData } from '../helpers';
+import { isPhoneNumberValid, phoneNumberMask, initModalData, proxy } from '../helpers';
 import { useHistory } from 'react-router';
 
 export const DeleteUser = () => {
@@ -17,7 +17,7 @@ export const DeleteUser = () => {
         if (isNumberValid && value !== '') {
             setIsLoading(() => true);
             const userData = await fetch(
-                `/api/getUser?phoneNumber=${encodeURIComponent(value)}`,
+                `${proxy}/api/getUser?phoneNumber=${encodeURIComponent(value)}`,
                 {
                     headers: { 'Content-Type': 'application/json' },
                 }
@@ -77,7 +77,7 @@ export const DeleteUser = () => {
     const deleteUserHandler = async phoneNumber => {
         setIsLoading(() => true);
 
-        const req = await fetch('/api/deleteUser', {
+        const req = await fetch(`${proxy}/api/deleteUser`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phoneNumber }),
@@ -133,6 +133,7 @@ export const DeleteUser = () => {
         <div className="column">
             <MaskedInput
                 className="input"
+                type="tel"
                 onChange={onPhoneNumberChange}
                 value={phoneNumber}
                 mask={phoneNumberMask}

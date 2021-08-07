@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import MaskedInput from 'react-text-mask';
 import { CustomModal } from './Modal';
 import { Loader } from './Loader';
-import { isPhoneNumberValid, phoneNumberMask, initModalData } from '../helpers';
+import { isPhoneNumberValid, phoneNumberMask, initModalData, proxy } from '../helpers';
 
 export const ChangeUser = () => {
     const [oldPhoneNumber, setOldPhoneNumber] = useState('+7');
@@ -22,7 +22,7 @@ export const ChangeUser = () => {
         if (isNumberValid) {
             setIsLoading(() => true);
             const req = await fetch(
-                `/api/getUser?phoneNumber=${encodeURIComponent(e.target.value)}`,
+                `${proxy}/api/getUser?phoneNumber=${encodeURIComponent(e.target.value)}`,
                 {
                     headers: { 'Content-Type': 'application/json' },
                 }
@@ -68,7 +68,7 @@ export const ChangeUser = () => {
 
     const onSubmit = async () => {
         setIsLoading(() => true);
-        const req = await fetch('/api/changeUser', {
+        const req = await fetch(`${proxy}/api/changeUser`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -114,6 +114,7 @@ export const ChangeUser = () => {
         <div className="column">
             <MaskedInput
                 className="input"
+                type="tel"
                 placeholder="Старый номер клиента"
                 onChange={onOldPhoneNumberChange}
                 value={oldPhoneNumber}
@@ -127,6 +128,7 @@ export const ChangeUser = () => {
                     </p>
                     <MaskedInput
                         className="input"
+                        type="tel"
                         onChange={onNewPhoneNumberChange}
                         value={newPhoneNumber}
                         mask={phoneNumberMask}

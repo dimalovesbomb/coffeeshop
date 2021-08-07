@@ -21,3 +21,5 @@ export const initModalData = {
 };
 
 export const ENOUGH_TO_GET_FREE_CUP = 6;
+
+export const proxy = 'http://kupriunin.ru/coffee'

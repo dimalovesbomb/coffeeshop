@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MaskedInput from 'react-text-mask';
 import { CustomModal } from './Modal';
 import { Loader } from './Loader';
-import { isPhoneNumberValid, phoneNumberMask, initModalData, ENOUGH_TO_GET_FREE_CUP } from '../helpers';
+import { isPhoneNumberValid, phoneNumberMask, initModalData, ENOUGH_TO_GET_FREE_CUP, proxy } from '../helpers';
 import { useHistory } from 'react-router-dom';
 
 export const RegCup = () => {
@@ -20,7 +20,7 @@ export const RegCup = () => {
         if (isNumberValid && value !== '') {
             setIsLoading(() => true);
             const req = await fetch(
-                `/api/getUser?phoneNumber=${encodeURIComponent(value)}`,
+                `${proxy}/api/getUser?phoneNumber=${encodeURIComponent(value)}`,
                 {
                     headers: { 'Content-Type': 'application/json' },
                 }
@@ -111,7 +111,7 @@ export const RegCup = () => {
 
     const onSubmit = async () => {
         setIsLoading(() => true);
-        const req = await fetch('/api/newCups', {
+        const req = await fetch(`${proxy}/api/newCups`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -157,7 +157,7 @@ export const RegCup = () => {
 
     const onFreeCupConfirm = async () => {
         setIsLoading(() => true);
-        const req = await fetch('/api/restoreCups', {
+        const req = await fetch(`${proxy}/api/restoreCups`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phoneNumber }),
@@ -201,6 +201,7 @@ export const RegCup = () => {
         <div className="column">
             <MaskedInput
                 className="input"
+                type="tel"
                 onBlur={onPhoneNumberChange}
                 mask={phoneNumberMask}
                 value={phoneNumber}

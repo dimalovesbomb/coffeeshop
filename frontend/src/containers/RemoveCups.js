@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MaskedInput from 'react-text-mask';
 import { CustomModal } from './Modal';
 import { Loader } from './Loader';
-import { phoneNumberMask, isPhoneNumberValid, initModalData } from '../helpers';
+import { phoneNumberMask, isPhoneNumberValid, initModalData, proxy } from '../helpers';
 import { useHistory } from 'react-router';
 
 export const RemoveCups = () => {
@@ -20,7 +20,7 @@ export const RemoveCups = () => {
         if (isNumberValid && value !== '') {
             setIsLoading(() => true);
             const req = await fetch(
-                `/api/getUser?phoneNumber=${encodeURIComponent(value)}`,
+                `${proxy}/api/getUser?phoneNumber=${encodeURIComponent(value)}`,
                 {
                     headers: { 'Content-Type': 'application/json' },
                 }
@@ -94,7 +94,7 @@ export const RemoveCups = () => {
 
     const onSubmit = async () => {
         setIsLoading(() => true);
-        const req = await fetch('/api/removeMistakes', {
+        const req = await fetch(`${proxy}/api/removeMistakes`, {
             headers: { 'Content-Type': 'application/json' },
             method: 'PUT',
             body: JSON.stringify({
@@ -141,6 +141,7 @@ export const RemoveCups = () => {
         <div className="column">
             <MaskedInput
                 className="input"
+                type="tel"
                 onBlur={onPhoneNumberBlur}
                 mask={phoneNumberMask}
                 value={phoneNumber}

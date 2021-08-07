@@ -1,16 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import { RegCup } from './containers/RegCup';
+import {Home} from './containers/Home';
 
 test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  render(<Home />);
+  const linkElement = screen.getByText(/Новый клиент/i);
   expect(linkElement).toBeInTheDocument();
-});
-
-test('hello world', () => {
-  render(<RegCup/>);
-
-  const inputElement = screen.getAllByDisplayValue(/Сколько/i);
-  expect(inputElement).toBeInTheDocument();
 });

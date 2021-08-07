@@ -1,11 +1,12 @@
+import React from 'react';
 import { Route, Switch } from 'react-router';
-import './App.css';
 import { ChangeUser } from './containers/ChangeUser';
 import { Home } from './containers/Home';
 import { NewUser } from './containers/NewUser';
 import { RegCup } from './containers/RegCup';
 import { RemoveCups } from './containers/RemoveCups';
 import { DeleteUser } from './containers/DeleteUser';
+import './App.css';
 
 const App = () => {
     return (

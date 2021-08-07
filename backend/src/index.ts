@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import { changeUser, deleteUser, getUser, newCups, newUser, removeMistakes, Response, restoreCups, User } from "./methods";
+import path from 'path';
 
 const uri = "mongodb+srv://dima_loves_bomb:8903Dmit@dimalovesbomb.mfzkb.mongodb.net/coffee?retryWrites=true&w=majority";
 
@@ -12,7 +13,7 @@ mongoose.connection.once('open', () => {
 mongoose.set('useFindAndModify', false); // Anti-deprecation warning
 
 const app = express();
-const PORT = 8080;
+const PORT = 49876;
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -25,7 +26,10 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 
-app.get('/api/getUser?:phoneNumber', async (req, res) => {
+app.use(express.static(path.join(__dirname, /*'../', 'dist'*/)));
+
+app.get('/coffee/api/getUser?:phoneNumber', async (req, res) => {
+  console.log('gets into method')
     const phoneNumber = req.query.phoneNumber.toString();
 
     const recievedUser = new User(phoneNumber, '');
@@ -34,46 +38,50 @@ app.get('/api/getUser?:phoneNumber', async (req, res) => {
     return res.status(response.statusCode).send(response);
 });
 
-app.put('/api/changeUser', async (req, res) => {
+app.put('/coffee/api/changeUser', async (req, res) => {
     const receivedUser = new User(req.body.phoneNumber, '', req.body.oldPhoneNumber);
     const response: Response = await changeUser(receivedUser);
 
     return res.status(response.statusCode).send(response);
 });
 
-app.put('/api/newCups', async (req, res) => {
+app.put('/coffee/api/newCups', async (req, res) => {
     const receivedUser = new User(req.body.phoneNumber, '', '', +req.body.cupsQuantity);
     const response: Response = await newCups(receivedUser);
 
     return res.status(response.statusCode).send(response);
 });
 
-app.put('/api/restoreCups', async (req, res) => {
+app.put('/coffee/api/restoreCups', async (req, res) => {
   const phoneNumber = req.body.phoneNumber;
   const response: Response = await restoreCups(phoneNumber);
 
   return res.status(response.statusCode).send(response);
 });
 
-app.put('/api/removeMistakes', async (req, res) => {
+app.put('/coffee/api/removeMistakes', async (req, res) => {
   const {phoneNumber, cupsQuantity} = req.body;
   const response = await removeMistakes(cupsQuantity, phoneNumber);
 
   return res.status(response.statusCode).send(response);
 });
 
-app.post('/api/newUser', async (req, res) => {
+app.post('/coffee/api/newUser', async (req, res) => {
     const receivedUser = new User(req.body.phoneNumber, req.body.name, '', +req.body.cupsQuantity);
     const response: Response = await newUser(receivedUser);
 
     return res.status(response.statusCode).send(response);
 });
 
-app.delete('/api/deleteUser', async (req, res) => {
+app.delete('/coffee/api/deleteUser', async (req, res) => {
   const { phoneNumber } = req.body;
   const response = await deleteUser(phoneNumber);
 
   return res.status(response.statusCode).send(response);
+});
+
+app.get('/coffee/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, () => {

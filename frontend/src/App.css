@@ -1,3 +1,4 @@
+
 .App {
   display: flex;
   justify-content: center;
@@ -15,8 +16,14 @@ ul {
   list-style-type: none;
 }
 
+li {
+  width: 100%;
+  max-width: 503px;
+}
+
 .link {
   width: 100%;
+  max-width: 503px;
   text-align: center;
   display: inline-block;
   text-decoration: none;
@@ -49,7 +56,8 @@ ul {
 }
 
 .input {
-  width: 250px;
+  width: 100%;
+  max-width: 250px;
   height: 40px;
   background-color: rgba(198, 198, 136, 0.1);
   border: 1px solid lemonchiffon;
@@ -119,4 +127,24 @@ ul {
 
 .loader img {
   width: 20%;
+}
+
+@media (max-width: 512px) and (min-width: 320px) {
+
+  .list {
+    padding: 0 5px;
+  }
+
+  li {
+    width: 90%;
+  }
+
+  .link {
+    margin-top: 25px;
+    font-size: 24px;
+  }
+
+  .ReactModal__Content {
+    width: 80vw;
+  }
 }
