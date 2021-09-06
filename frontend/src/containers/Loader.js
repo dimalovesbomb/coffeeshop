@@ -5,7 +5,7 @@ export const Loader = ({ isLoading }) => {
         <div>
             {isLoading && (
                 <div className="loader">
-                    <img src="./timer.jpg" alt="timer" />
+                    <img src="./timer.png" alt="timer" />
                     <p>Секундомерчик</p>
                 </div>
             )}

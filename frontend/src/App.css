@@ -123,10 +123,43 @@ li {
 .loader p {
   color: #302c2c;
   font-size: 40px;
+  font-weight: 200;
+  text-shadow: 2px 1px 0 #e0dee9, -2px -1px 0 #302c2c;
+  animation: loaderTextAnimation 0.2s ease-in infinite;
 }
 
 .loader img {
+  transform: rotate(10deg);
   width: 20%;
+  animation: dancingCat 0.2s ease-in infinite;
+}
+
+@keyframes loaderTextAnimation {
+  0%, 100% {
+    text-shadow: 2px 0 0 #e0dee9, 0 -2px 0 #302c2c;
+  }
+
+  25% {
+    text-shadow: 2px 2px 0 #e0dee9, -2px -2px 0 #302c2c;
+  }
+
+  50% {
+    text-shadow: 0 2px 0 #e0dee9, -2px 0 0 #302c2c;
+  }
+
+  75% {
+    text-shadow: 0 0 0 #e0dee9, 0 0 0 #302c2c;
+  }
+}
+
+@keyframes dancingCat {
+  0%, 100% {
+    transform: translate(10deg);
+  }
+
+  50% {
+    transform: translate(0);
+  }
 }
 
 @media (max-width: 512px) and (min-width: 320px) {
@@ -146,5 +179,9 @@ li {
 
   .ReactModal__Content {
     width: 80vw;
+  }
+
+  .loader img {
+    width: 120%;
   }
 }
